@@ -1,0 +1,18 @@
+h1 {
+    display: flex;
+    justify-content: center;
+}
+
+.gameboard {
+    display: grid;
+    grid-template-columns: 50px 50px 50px;
+    justify-content: center;
+}
+
+.square {
+    border: 1px solid black;
+    margin-top: -1px;
+    margin-left: -1px;
+    height: 50px;
+    width: 50px;
+}
