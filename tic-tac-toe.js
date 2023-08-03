@@ -16,6 +16,25 @@ function playRound(e, currentPlayer) {
     }
 }
 
+function checkForTie(square) {
+    if (areFull(square[0].value, square[1].value, square[2].value,
+        square[3].value, square[4].value, square[5].value,
+        square[6].value, square[7].value, square[8].value)) {
+        return true;
+    }
+    return false;
+}
+
+
+function areFull() {
+    for (let i = 0; i < arguments.length; i++) {
+        if (arguments[i] === null) {
+            return false
+        }
+    }
+    return true;
+}
+
 function checkForWin(square) {
     //all the win conditions
     if (areEqual(square[0].value, square[1].value, square[2].value) ||
@@ -48,11 +67,13 @@ function GameController() {
     function play(e) {
         if (e.target.value === null) {
             playRound(e, currentPlayer);
-
             if (checkForWin(square)) {
                 console.log("winner");
                 stopPlay();
-            };
+            } else if (checkForTie(square)) {
+                console.log("tie");
+                stopPlay();
+            }
             currentPlayer = (currentPlayer === "p1") ? "p2" : "p1";
         }
     }
