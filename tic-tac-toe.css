@@ -10,9 +10,16 @@ h1 {
 }
 
 .square {
+    display: grid;
     border: 1px solid black;
     margin-top: -1px;
     margin-left: -1px;
     height: 50px;
     width: 50px;
+}
+
+.x-square, .o-square {
+    display: grid;
+    justify-content: center;
+    align-content: center;
 }
