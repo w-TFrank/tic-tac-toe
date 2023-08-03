@@ -83,6 +83,11 @@ function GameController() {
             square[i].value = null;
             square[i].removeEventListener("click", play);
         }
+        playAgain();
+    }
+
+    function playAgain() {
+        document.getElementById("play-again").style.display = "flex";
     }
 
     for (let i = 0; i < square.length; i++) {
