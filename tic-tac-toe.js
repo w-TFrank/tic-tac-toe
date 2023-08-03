@@ -87,7 +87,21 @@ function GameController() {
     }
 
     function playAgain() {
-        document.getElementById("play-again").style.display = "flex";
+        const playAgain = document.getElementById("play-again");
+        playAgain.style.display = "flex";
+        playAgain.addEventListener("click", handler);
+
+        function handler() {
+            console.log("working");
+            playAgain.style.display = "none";
+            for (let i = 0; i < square.length; i++) {
+                if (square[i].children[0]) {
+                    square[i].removeChild(square[i].children[0]);
+                }
+            }
+            playAgain.removeEventListener("click", handler);
+            GameController();
+        }
     }
 
     for (let i = 0; i < square.length; i++) {
