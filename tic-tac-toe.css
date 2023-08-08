@@ -28,9 +28,6 @@ h4, p {
     align-content: center;
 }
 
-.choose-symbols {
-}
-
 .symbols {
     display: flex;
     justify-content: center;
