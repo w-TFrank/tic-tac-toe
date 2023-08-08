@@ -1,6 +1,10 @@
-h1 {
+h1, h4 {
     display: flex;
     justify-content: center;
+}
+
+h4, p {
+    margin: 0px;
 }
 
 .gameboard {
@@ -24,11 +28,26 @@ h1 {
     align-content: center;
 }
 
+.choose-symbols {
+}
+
+.symbols {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    gap: 10px;
+}
+
 .hidden {
     display: none;
 }
 
 .button-flex {
+    display: flex;
+    justify-content: center;
+}
+
+#win-con {
     display: flex;
     justify-content: center;
 }

@@ -1,28 +1,46 @@
-function GameController() {
+function GameController(symbolChoice) {
     //gets an array of squares for the game board
     const square = document.getElementsByClassName("square");
-    //sets the starting player as player 1
-    let currentPlayer = "p1";
+
+    //sets the starting player as whatever the player chose
+    let currentPlayer = (symbolChoice === "O") ? "p2" : "p1";
 
     function play(e) {
         //checks to see if square already has value,
-        //then checks for win then checks for tie,
+        //then checks for win,
+        //then checks for tie,
         //if either are true then event listeners are turned off
-        //if not then current player is switched and play continues 
+        //if not then current player is switched and play continues
         if (e.target.value === null) {
             playRound(e, currentPlayer);
             if (checkForWin(square)) {
-                stopPlay();
+                stopPlay(currentPlayer, "win");
             } else if (checkForTie(square)) {
-                stopPlay();
+                stopPlay(currentPlayer, "tie");
             }
             currentPlayer = (currentPlayer === "p1") ? "p2" : "p1";
         }
     }
 
-    function stopPlay() {
+    function stopPlay(currentPlayer, winCondition) {
         //removes all the event listeners so squares can't continue to be clicked
         //after a win or tie has been reached
+        currentPlayer = (currentPlayer === "p1") ? "Player 1" : "Player 2";
+        if (winCondition === "win") {
+            const chooseSymbols = document.getElementById("win-con");
+            const win = document.createElement("h3");
+            win.style.display = "flex";
+            win.id = "win";
+            win.textContent = currentPlayer + " wins!";
+            chooseSymbols.appendChild(win);
+        } else {
+            const chooseSymbols = document.getElementById("win-con");
+            const win = document.createElement("h3");
+            win.style.display = "flex";
+            win.id = "win";
+            win.textContent = "It's a tie!";
+            chooseSymbols.appendChild(win);
+        }
         for (let i = 0; i < square.length; i++) {
             square[i].value = null;
             square[i].removeEventListener("click", play);
@@ -33,6 +51,7 @@ function GameController() {
     function playAgain() {
         //makes the play again button become visible and adds a listener to the button
         const playAgain = document.getElementById("play-again");
+        const win = document.getElementById("win");
         playAgain.style.display = "flex";
         playAgain.addEventListener("click", handler);
 
@@ -41,13 +60,14 @@ function GameController() {
             //is turned off, and the values of all the squares are reset so the game
             //can be played again. play restarts
             playAgain.style.display = "none";
+            win.remove();
             for (let i = 0; i < square.length; i++) {
                 if (square[i].children[0]) {
                     square[i].removeChild(square[i].children[0]);
                 }
             }
             playAgain.removeEventListener("click", handler);
-            GameController();
+            getPlayers();
         }
     }
 
@@ -55,6 +75,31 @@ function GameController() {
     for (let i = 0; i < square.length; i++) {
         square[i].value = null;
         square[i].addEventListener("click", play);
+    }
+}
+
+function getPlayers() {
+    const choose = document.getElementById("choose-symbols");
+    const xButton = document.getElementById("x-button");
+    const oButton = document.getElementById("o-button");
+
+    choose.style.display = "block";
+
+    xButton.addEventListener("click", xHandler);
+    oButton.addEventListener("click", oHandler);
+
+    function xHandler() {
+        GameController("X");
+        xButton.removeEventListener("click", xHandler);
+        oButton.removeEventListener("click", oHandler);
+        choose.style.display = "none";
+    }
+
+    function oHandler() {
+        GameController("O");
+        xButton.removeEventListener("click", xHandler);
+        oButton.removeEventListener("click", oHandler);
+        choose.style.display = "none";
     }
 }
 
@@ -117,7 +162,8 @@ function areEqual() {
 function areFull() {
     //checks if values are null
 
-    //i think this could be gotten rid of and it could just be done in checkForTie if statement
+    //i think this could be gotten rid of and it could just be done
+    //in checkForTie if statement pretty easily
     //but this works
     for (let i = 0; i < arguments.length; i++) {
         if (arguments[i] === null) {
@@ -127,4 +173,4 @@ function areFull() {
     return true;
 }
 
-GameController();
+getPlayers();
